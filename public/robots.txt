@@ -1,0 +1,15 @@
+# Grid Homes Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://gridhomes.in/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10
+
+# Disallow admin and private paths
+Disallow: /api/
+Disallow: /_next/
+Disallow: /*.json$
+Disallow: /*?*
