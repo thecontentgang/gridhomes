@@ -55,7 +55,7 @@ export function Footer({ experience }: FooterProps) {
 
   return (
     <footer
-      className="bg-black rounded-t-[2.5rem] lg:rounded-t-[4rem] mt-4 pt-6 overflow-hidden "
+      className="bg-black rounded-t-[2.5rem] lg:rounded-t-[4rem] mt-4 pt-6 overflow-hidden"
       role="contentinfo"
     >
       <div className="container-lg mx-auto px-6 py-20 lg:py-24">
@@ -65,8 +65,16 @@ export function Footer({ experience }: FooterProps) {
 
           {/* BRANDING */}
           <div className="md:col-span-5 lg:col-span-4">
-            <a href={`/${experience.type}`} className="font-display text-3xl text-gold block mb-6" aria-label={`${experience.name} - Home`}>
-              Grid Homes
+            <a
+              href={`/${experience.type}`}
+              className="inline-block mb-6 group"
+              aria-label={`${experience.name} - Home`}
+            >
+              <img
+                src="/images/entry/grid-logo.png"
+                alt="Grid Homes"
+                className="h-10 w-auto object-contain saturate-150 contrast-125 group-hover:saturate-200 transition-all duration-300"
+              />
             </a>
             <p className="font-sans text-white/70 mb-8 max-w-sm leading-relaxed">
               {experience.footer.description}

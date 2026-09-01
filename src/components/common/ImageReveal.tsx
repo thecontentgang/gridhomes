@@ -1,7 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, MotionValue } from 'motion/react';
+import { motion } from 'motion/react';
 import { cn } from '@/lib/utils/cn';
 import Image from 'next/image';
 import type { ImgHTMLAttributes } from 'react';
@@ -11,8 +10,8 @@ interface ImageRevealProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'sr
   alt: string;
   className?: string;
   aspectRatio?: '4/3' | '16/10' | '3/2' | '1/1';
-  revealDirection?: 'left' | 'right' | 'up' | 'down';
-  parallax?: boolean;
+  revealDirection?: 'left' | 'right' | 'up' | 'down'; // Kept for backwards compatibility but not used
+  parallax?: boolean; // Kept for backwards compatibility
   grayscaleHover?: boolean;
   onLoad?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
   onError?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
@@ -23,34 +22,10 @@ export function ImageReveal({
   alt,
   className,
   aspectRatio = '4/3',
-  revealDirection = 'left',
-  parallax = false,
   grayscaleHover = false,
   onLoad,
   onError,
 }: ImageRevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'center center'],
-  });
-
-  const clipPath = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [
-      revealDirection === 'left' ? 'inset(0% 100% 0% 0%)' : 'inset(0% 0% 0% 100%)',
-      'inset(0% 0% 0% 0%)',
-    ]
-  );
-
-  const scale = useTransform(scrollYProgress, [0, 1], [1.12, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.4, 1], [0, 1, 1]);
-
-  const parallaxY = parallax
-    ? useTransform(scrollYProgress, [0, 1], ['-15%', '15%'])
-    : undefined;
-
   const aspectClass = {
     '4/3': 'aspect-4-3',
     '16/10': 'aspect-16-10',
@@ -60,15 +35,14 @@ export function ImageReveal({
 
   return (
     <motion.div
-      ref={ref}
-      className={cn('image-reveal', aspectClass, className)}
-      style={{ opacity: opacity as MotionValue<number> }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
+      className={cn('image-reveal relative', aspectClass, className)}
     >
-      <motion.div
+      <div
         style={{
-          clipPath: clipPath as MotionValue<string>,
-          scale: scale as MotionValue<number>,
-          y: parallaxY as MotionValue<string | number> | undefined,
           width: '100%',
           height: '100%',
           position: 'relative',
@@ -83,7 +57,7 @@ export function ImageReveal({
           onLoad={onLoad}
           onError={onError}
         />
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
@@ -96,25 +70,18 @@ interface ImageParallaxProps {
   scale?: number;
 }
 
-export function ImageParallax({ src, alt, className, speed = 0.3, scale = 1.15 }: ImageParallaxProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', `${speed * 100}%`]);
-  const scaleTransform = useTransform(scrollYProgress, [0, 1], [scale, 1]);
-
+export function ImageParallax({ src, alt, className }: ImageParallaxProps) {
   return (
-    <div ref={ref} className={cn('relative overflow-hidden', className)}>
+    <div className={cn('relative overflow-hidden', className)}>
       <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
         style={{
           backgroundImage: `url(${src})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          y: y as MotionValue<string>,
-          scale: scaleTransform as MotionValue<number>,
         }}
         className="absolute inset-0"
         aria-hidden="true"

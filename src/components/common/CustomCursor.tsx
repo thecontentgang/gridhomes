@@ -21,10 +21,15 @@ export function CustomCursor({ enabled = true }: CustomCursorProps) {
   const reducedMotion = useRef(false);
 
   // Mount setup
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
+
   useEffect(() => {
-    setMounted(true);
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    reducedMotion.current = mediaQuery.matches;
+    setTimeout(() => {
+      setMounted(true);
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      reducedMotion.current = mediaQuery.matches;
+      setIsReducedMotion(mediaQuery.matches);
+    }, 0);
   }, []);
 
   // Movement & Animation Loop
@@ -94,7 +99,7 @@ export function CustomCursor({ enabled = true }: CustomCursorProps) {
     };
   }, [enabled, mounted]);
 
-  if (!enabled || reducedMotion.current || !mounted) {
+  if (!enabled || isReducedMotion || !mounted) {
     return null;
   }
 

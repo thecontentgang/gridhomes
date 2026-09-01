@@ -38,7 +38,7 @@ export function Hero({ experience }: HeroProps) {
   // The rounded-b-[2.5rem] lg:rounded-b-[4rem] creates the curved bottom corners!
   return (
     <section
-      className="relative min-h-[100dvh] flex flex-col overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem] shadow-2xl bg-black"
+      className="relative min-h-[100dvh] flex flex-col overflow-hidden shadow-2xl bg-black"
       aria-labelledby="hero-title"
     >
 
@@ -132,7 +132,7 @@ export function Hero({ experience }: HeroProps) {
           {/* SECONDARY BUTTON: Minimalist Editorial Brackets */}
           <button
             className="group flex items-center justify-center gap-3 cursor-pointer px-6 py-4 w-full sm:w-auto"
-            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })}
             aria-label="View Projects"
           >
             <span className="text-gold/60 group-hover:text-gold group-hover:-translate-x-1 transition-all duration-500 font-mono text-xs">

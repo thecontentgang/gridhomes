@@ -20,7 +20,7 @@ export function Gallery({ experience, projects, maxItems = 6, number = '03' }: G
   const galleryItems = projects.slice(0, maxItems);
 
   return (
-    <section id="gallery" className="section bg-white py-24 lg:py-36 border-b border-neutral-100" aria-labelledby="gallery-heading">
+    <section id="gallery" className="section bg-white py-24 lg:py-36 border-b border-neutral-100 text-black" aria-labelledby="gallery-heading">
       <div className="container-lg mx-auto px-4 md:px-6">
 
         {/* CUSTOM HEADER SECTION (Forced Black/Dark Text) */}
@@ -30,18 +30,18 @@ export function Gallery({ experience, projects, maxItems = 6, number = '03' }: G
             <div className="flex items-center gap-4 mb-4 md:mb-6">
               <span className="font-mono text-xs text-gold font-bold tracking-widest">{number}</span>
               <span className="h-px w-8 md:w-10 bg-neutral-300" aria-hidden="true" />
-              <span className="font-mono text-[10px] md:text-xs text-neutral-900 tracking-widest uppercase font-semibold">
+              <span className="font-mono text-[10px] md:text-xs text-black tracking-widest uppercase font-semibold">
                 {experience.name}
               </span>
             </div>
 
             {/* Main Title (Black Text) */}
-            <h2 id="gallery-heading" className="font-display text-4xl sm:text-5xl lg:text-6xl text-neutral-900 leading-[1.1] mb-4 md:mb-6">
+            <h2 id="gallery-heading" className="font-display text-4xl sm:text-5xl lg:text-6xl text-black leading-[1.1] mb-4 md:mb-6">
               Visual Journal
             </h2>
 
             {/* Subtitle (Dark Gray Text) */}
-            <p className="font-sans text-base md:text-lg lg:text-xl text-neutral-600 leading-relaxed font-normal">
+            <p className="font-sans text-base md:text-lg lg:text-xl text-neutral-700 leading-relaxed font-normal">
               A curated gallery exploring the finer details of our completed spaces and structures.
             </p>
           </ScrollReveal>
@@ -77,11 +77,11 @@ export function Gallery({ experience, projects, maxItems = 6, number = '03' }: G
               variant="secondary"
               size="lg"
               href={`/${experience.type}/gallery`}
-              className="group font-mono text-[11px] sm:text-xs uppercase tracking-widest text-neutral-900 border-neutral-200 hover:border-gold hover:text-gold hover:bg-gold/5 transition-all duration-300 flex items-center justify-center gap-3 px-8 py-4 rounded-full border"
+              className="group font-mono text-[11px] sm:text-xs uppercase tracking-widest text-black border-neutral-200 hover:border-gold hover:text-gold hover:bg-gold/5 transition-all duration-300 flex items-center justify-center gap-3 px-8 py-4 rounded-full border"
             >
               Explore Full Gallery
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-neutral-100 group-hover:bg-gold transition-colors duration-300">
-                <ChevronRight className="w-3 h-3 text-neutral-900 group-hover:text-black transition-colors" />
+                <ChevronRight className="w-3 h-3 text-black group-hover:text-black transition-colors" />
               </span>
             </LinkButton>
           </ScrollReveal>

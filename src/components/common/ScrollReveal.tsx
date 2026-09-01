@@ -96,11 +96,10 @@ export function StaggerItem({
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 40, scale: 0.96 },
+        hidden: { opacity: 0, y: 40 },
         visible: {
           opacity: 1,
           y: 0,
-          scale: 1,
           transition: { duration, delay, ease: [0.21, 0.47, 0.32, 0.98] },
         },
       }}

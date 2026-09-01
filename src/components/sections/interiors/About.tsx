@@ -33,7 +33,7 @@ export function About({ experience }: AboutProps) {
   const textStats = experience.stats.slice(2);
 
   return (
-    <section id="about" className="section bg-white py-24 lg:py-36 border-b border-neutral-100" aria-labelledby="about-heading">
+    <section id="about" className="section bg-white py-24 lg:py-36 border-b border-neutral-100 text-black" aria-labelledby="about-heading">
       <div className="container-lg mx-auto px-4 sm:px-6">
 
         {/* PART 1: THE STORY (Grid layout) */}
@@ -45,11 +45,11 @@ export function About({ experience }: AboutProps) {
                 <span className="h-px w-10 bg-neutral-200" aria-hidden="true" />
                 <span className="font-mono text-xs text-neutral-400 tracking-widest uppercase">About Us</span>
               </div>
-              <h2 id="about-heading" className="font-display text-4xl sm:text-5xl lg:text-6xl text-neutral-900 leading-[1.1] mb-6">
+              <h2 id="about-heading" className="font-display text-4xl sm:text-5xl lg:text-6xl text-black leading-[1.1] mb-6">
                 {heading}
               </h2>
               <span className="block h-px w-14 bg-gold mb-8" aria-hidden="true" />
-              <p className="font-sans text-lg lg:text-xl text-neutral-600 leading-relaxed font-normal">{intro}</p>
+              <p className="font-sans text-lg lg:text-xl text-neutral-700 leading-relaxed font-normal">{intro}</p>
             </ScrollReveal>
           </div>
 
@@ -57,7 +57,7 @@ export function About({ experience }: AboutProps) {
             <StaggerContainer staggerChildren={0.1} delayChildren={0.15}>
               {paragraphs.map((paragraph, index) => (
                 <StaggerItem key={index}>
-                  <p className={cn('font-sans text-base lg:text-lg leading-relaxed text-neutral-600 font-normal', index === 0 ? 'mb-6' : 'mb-8')}>
+                  <p className={cn('font-sans text-base lg:text-lg leading-relaxed text-neutral-700 font-normal', index === 0 ? 'mb-6' : 'mb-8')}>
                     {paragraph}
                   </p>
                 </StaggerItem>
@@ -76,7 +76,7 @@ export function About({ experience }: AboutProps) {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: index * 0.08 }}
                       >
-                        <span className="font-display text-4xl lg:text-5xl text-neutral-900 tabular-nums">{stat.value}</span>
+                        <span className="font-display text-4xl lg:text-5xl text-black tabular-nums">{stat.value}</span>
                         <span className="font-mono text-[11px] text-neutral-400 tracking-widest uppercase">{stat.label}</span>
                       </motion.div>
                     ))}
@@ -140,7 +140,7 @@ export function About({ experience }: AboutProps) {
           <div className="mt-32 lg:mt-40 max-w-4xl mx-auto text-center">
             <ScrollReveal delay={0.2}>
               <span className="font-mono text-xs text-neutral-400 tracking-[0.3em] uppercase block mb-6">Our Philosophy</span>
-              <h3 className="font-display text-3xl sm:text-4xl md:text-5xl text-neutral-900 leading-tight">
+              <h3 className="font-display text-3xl sm:text-4xl md:text-5xl text-black leading-tight">
                 &ldquo;{missionStatement}&rdquo;
               </h3>
             </ScrollReveal>
@@ -151,7 +151,7 @@ export function About({ experience }: AboutProps) {
         {values && values.length > 0 && (
           <div className="mt-24 lg:mt-36 pt-20 border-t border-neutral-200">
             <ScrollReveal delay={0.1}>
-              <h4 className="font-display text-3xl sm:text-4xl text-neutral-900 mb-12 lg:mb-16">
+              <h4 className="font-display text-3xl sm:text-4xl text-black mb-12 lg:mb-16">
                 {valuesHeading}
               </h4>
             </ScrollReveal>
@@ -164,10 +164,10 @@ export function About({ experience }: AboutProps) {
                       <span className="font-mono text-xs text-gold tracking-widest mb-6 block font-medium">
                         0{idx + 1}
                       </span>
-                      <h5 className="font-display text-2xl text-neutral-900 mb-4">
+                      <h5 className="font-display text-2xl text-black mb-4">
                         {value.title}
                       </h5>
-                      <p className="font-sans text-base text-neutral-600 leading-relaxed font-normal">
+                      <p className="font-sans text-base text-neutral-700 leading-relaxed font-normal">
                         {value.description}
                       </p>
                     </div>

@@ -15,18 +15,21 @@ interface TestimonialsProps {
 export function Testimonials({ experience, testimonials, number = '07' }: TestimonialsProps) {
   // We duplicate the testimonials to create a seamless infinite loop
   const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials];
-  
+
   return (
-    <section id="testimonials" className="section bg-white py-24 lg:py-36 border-b border-neutral-100 overflow-hidden" aria-labelledby="testimonials-heading">
-      <div className="container-lg mx-auto px-6 mb-16 lg:mb-24">
+    <section id="testimonials" className="section bg-white py-24 lg:py-36 border-b border-neutral-100 overflow-hidden text-black" aria-labelledby="testimonials-heading">
+      <div className="container-lg mx-auto px-6 mb-16 lg:mb-24 text-black">
         <ScrollReveal delay={0.1}>
-          <SectionHeading
-            number={number}
-            eyebrow="Client Voices"
-            title="Trusted by Visionaries"
-            subtitle="The uncompromising standards and foundational principles that drive our craft."
-            delay={0}
-          />
+          {/* Black text override wrapper for the light background */}
+          <div className="[&_h2]:!text-black [&_p]:!text-black/70 [&_span]:!text-black/60">
+            <SectionHeading
+              number={number}
+              eyebrow="Client Voices"
+              title="Trusted by Visionaries"
+              subtitle="The uncompromising standards and foundational principles that drive our craft."
+              delay={0}
+            />
+          </div>
         </ScrollReveal>
       </div>
 
@@ -44,7 +47,7 @@ export function Testimonials({ experience, testimonials, number = '07' }: Testim
             duration: testimonials.length * 8, // Speed based on item count
             ease: "linear",
           }}
-          whileHover={{ animationPlayState: 'paused' }} 
+          whileHover={{ animationPlayState: 'paused' }}
         >
           {duplicatedTestimonials.map((current, index) => (
             <div
@@ -57,14 +60,14 @@ export function Testimonials({ experience, testimonials, number = '07' }: Testim
             >
               <div>
                 <Quote className="w-8 h-8 text-gold mb-6 opacity-80" />
-                <p className="font-sans text-base md:text-lg text-neutral-600 leading-relaxed mb-8">
+                <p className="font-sans text-base md:text-lg text-neutral-700 leading-relaxed mb-8">
                   &ldquo;{current.quote}&rdquo;
                 </p>
               </div>
 
               <div className="flex items-center gap-4 pt-6 border-t border-neutral-200/60 group-hover:border-gold/20 transition-colors">
                 <div className="flex-1">
-                  <h4 className="font-display text-lg text-neutral-900 group-hover:text-gold transition-colors">
+                  <h4 className="font-display text-lg text-black group-hover:text-gold transition-colors">
                     {current.author}
                   </h4>
                   <p className="font-mono text-[10px] text-neutral-400 tracking-widest uppercase mt-1">

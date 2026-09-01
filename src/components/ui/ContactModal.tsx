@@ -27,12 +27,30 @@ export function ContactModal({ experience, isOpen, onClose, defaultService }: Co
     message: '',
   });
 
-  // Keep form data in sync with defaultService if modal opens with a new default
   useEffect(() => {
     if (isOpen && defaultService && formData.projectType !== defaultService) {
-      setFormData(prev => ({ ...prev, projectType: defaultService }));
+      setTimeout(() => {
+        setFormData(prev => ({ ...prev, projectType: defaultService }));
+      }, 0);
     }
-  }, [isOpen, defaultService]);
+  }, [isOpen, defaultService, formData.projectType]);
+
+  useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(() => {
+        document.body.style.overflow = 'hidden';
+      }, 10);
+      return () => clearTimeout(timer);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   const [errors, setErrors] = useState<Partial<ContactFormData>>({});
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -80,7 +98,6 @@ export function ContactModal({ experience, isOpen, onClose, defaultService }: Co
   };
 
   const projectTypes = experience.services ? experience.services.map(s => s.name) : [];
-  const linkedInUrl = experience.footer.social.find(s => s.platform === 'LinkedIn')?.url;
 
   const budgetRanges = [
     'Under ₹50 Lakhs',
@@ -95,33 +112,34 @@ export function ContactModal({ experience, isOpen, onClose, defaultService }: Co
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size="lg" // Reduced from xl to lg for a cuter, more compact feel
-      className="max-h-[90vh] overflow-y-auto rounded-3xl"
+      size="md" // Smaller max-width
+      // Added mt-20 to avoid navbar, constrained height, and removed standard scrollbars
+      className="max-h-[calc(100dvh-100px)] mt-20 md:mt-24 overflow-y-auto sm:overflow-hidden rounded-3xl bg-black text-white border border-white/10 shadow-2xl scrollbar-hide"
     >
       <AnimatePresence mode="wait">
         {status === 'success' ? (
           <motion.div
             key="success"
-            className="flex flex-col items-center justify-center p-10 text-center"
+            className="flex flex-col items-center justify-center p-8 text-center"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
           >
             <motion.div
-              className="w-20 h-20 rounded-full bg-green-50 border-4 border-green-100 flex items-center justify-center mb-5"
+              className="w-16 h-16 rounded-full bg-green-500/10 border-4 border-green-500/20 flex items-center justify-center mb-4"
               initial={{ scale: 0, rotate: -15 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
-              <CheckCircle className="w-10 h-10 text-green-500" />
+              <CheckCircle className="w-8 h-8 text-green-400" />
             </motion.div>
-            <h3 className="font-display text-2xl text-neutral-900 mb-2">Message Sent!</h3>
-            <p className="text-sm text-neutral-500 mb-8 max-w-xs mx-auto leading-relaxed">
-              Thanks for reaching out! We'll review your details and get back to you within 24 hours.
+            <h3 className="font-display text-xl text-white mb-2">Message Sent!</h3>
+            <p className="text-xs text-white/70 mb-6 max-w-[250px] mx-auto leading-relaxed">
+              Thanks for reaching out! We&apos;ll review your details and get back to you within 24 hours.
             </p>
             <Button
               variant={experience.accentColor === 'clay' ? 'primary' : 'primary-construction'}
-              className="rounded-full px-8"
+              className="rounded-full px-8 py-2 text-black bg-gold hover:bg-white text-xs"
               onClick={() => {
                 setStatus('idle');
                 onClose();
@@ -132,77 +150,76 @@ export function ContactModal({ experience, isOpen, onClose, defaultService }: Co
           </motion.div>
         ) : (
           <>
-            <ModalHeader
-              title="Say Hello 👋"
-              subtitle="Tell us a little about your space, and we'll take it from there."
-            />
+            {/* Highly compact header */}
+            <div className="px-5 pt-5 pb-2 border-b border-white/5">
+              <h2 className="font-display text-xl sm:text-2xl text-white mb-1">Contact Us</h2>
+              <p className="text-xs text-white/60">Tell us about your space.</p>
+            </div>
 
-            <ModalBody className="p-5 sm:p-7">
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+            {/* Compressed body with tighter gaps and smaller inputs */}
+            <ModalBody className="p-5">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3" noValidate>
 
-                {/* Compact 2-Column Row 1 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label htmlFor="name" className="text-[10px] uppercase tracking-wider font-semibold text-neutral-500 ml-1 mb-1 block">Name *</label>
+                    <label htmlFor="name" className="text-[9px] uppercase tracking-wider font-semibold text-white/60 ml-1 mb-1 block">Name *</label>
                     <input
                       type="text" id="name" name="name"
                       value={formData.name} onChange={handleChange}
-                      className={cn('input rounded-xl bg-neutral-50 text-sm py-2.5', errors.name && 'input-error bg-red-50')}
+                      className={cn('input rounded-xl bg-white/5 border-white/10 text-xs py-2 text-white placeholder:text-white/30 focus:border-gold focus:ring-1 focus:ring-gold', errors.name && 'border-red-500/50 bg-red-500/10')}
                       placeholder="Jane Doe"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="text-[10px] uppercase tracking-wider font-semibold text-neutral-500 ml-1 mb-1 block">Email *</label>
+                    <label htmlFor="email" className="text-[9px] uppercase tracking-wider font-semibold text-white/60 ml-1 mb-1 block">Email *</label>
                     <input
                       type="email" id="email" name="email"
                       value={formData.email} onChange={handleChange}
-                      className={cn('input rounded-xl bg-neutral-50 text-sm py-2.5', errors.email && 'input-error bg-red-50')}
+                      className={cn('input rounded-xl bg-white/5 border-white/10 text-xs py-2 text-white placeholder:text-white/30 focus:border-gold focus:ring-1 focus:ring-gold', errors.email && 'border-red-500/50 bg-red-500/10')}
                       placeholder="jane@example.com"
                     />
                   </div>
                 </div>
 
-                {/* Compact 2-Column Row 2 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label htmlFor="phone" className="text-[10px] uppercase tracking-wider font-semibold text-neutral-500 ml-1 mb-1 block">Phone *</label>
+                    <label htmlFor="phone" className="text-[9px] uppercase tracking-wider font-semibold text-white/60 ml-1 mb-1 block">Phone *</label>
                     <input
                       type="tel" id="phone" name="phone"
                       value={formData.phone} onChange={handleChange}
-                      className={cn('input rounded-xl bg-neutral-50 text-sm py-2.5', errors.phone && 'input-error bg-red-50')}
+                      className={cn('input rounded-xl bg-white/5 border-white/10 text-xs py-2 text-white placeholder:text-white/30 focus:border-gold focus:ring-1 focus:ring-gold', errors.phone && 'border-red-500/50 bg-red-500/10')}
                       placeholder="+91 98765 43210"
                     />
                   </div>
                   <div>
-                    <label htmlFor="location" className="text-[10px] uppercase tracking-wider font-semibold text-neutral-500 ml-1 mb-1 block">Location *</label>
+                    <label htmlFor="location" className="text-[9px] uppercase tracking-wider font-semibold text-white/60 ml-1 mb-1 block">Location *</label>
                     <input
                       type="text" id="location" name="location"
                       value={formData.location} onChange={handleChange}
-                      className={cn('input rounded-xl bg-neutral-50 text-sm py-2.5', errors.location && 'input-error bg-red-50')}
+                      className={cn('input rounded-xl bg-white/5 border-white/10 text-xs py-2 text-white placeholder:text-white/30 focus:border-gold focus:ring-1 focus:ring-gold', errors.location && 'border-red-500/50 bg-red-500/10')}
                       placeholder="Hyderabad"
                     />
                   </div>
                 </div>
 
-                {/* Compact 2-Column Row 3 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label htmlFor="projectType" className="text-[10px] uppercase tracking-wider font-semibold text-neutral-500 ml-1 mb-1 block">Project Type *</label>
+                    <label htmlFor="projectType" className="text-[9px] uppercase tracking-wider font-semibold text-white/60 ml-1 mb-1 block">Project Type *</label>
                     <select
                       id="projectType" name="projectType"
                       value={formData.projectType} onChange={handleChange}
-                      className={cn('input rounded-xl bg-neutral-50 text-sm py-2.5', errors.projectType && 'input-error bg-red-50')}
+                      className={cn('input rounded-xl bg-white/5 border-white/10 text-xs py-2 text-white focus:border-gold focus:ring-1 focus:ring-gold [&>option]:bg-neutral-900', errors.projectType && 'border-red-500/50 bg-red-500/10')}
                     >
                       <option value="">Select type</option>
                       {projectTypes.map(type => <option key={type} value={type}>{type}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="budget" className="text-[10px] uppercase tracking-wider font-semibold text-neutral-500 ml-1 mb-1 block">Budget (Optional)</label>
+                    <label htmlFor="budget" className="text-[9px] uppercase tracking-wider font-semibold text-white/60 ml-1 mb-1 block">Budget (Optional)</label>
                     <select
                       id="budget" name="budget"
                       value={formData.budget} onChange={handleChange}
-                      className="input rounded-xl bg-neutral-50 text-sm py-2.5"
+                      className="input rounded-xl bg-white/5 border-white/10 text-xs py-2 text-white focus:border-gold focus:ring-1 focus:ring-gold [&>option]:bg-neutral-900"
                     >
                       <option value="">Select range</option>
                       {budgetRanges.map(range => <option key={range} value={range}>{range}</option>)}
@@ -210,33 +227,31 @@ export function ContactModal({ experience, isOpen, onClose, defaultService }: Co
                   </div>
                 </div>
 
-                {/* Message Field (Reduced height) */}
                 <div>
-                  <label htmlFor="message" className="text-[10px] uppercase tracking-wider font-semibold text-neutral-500 ml-1 mb-1 block">Project Details *</label>
+                  <label htmlFor="message" className="text-[9px] uppercase tracking-wider font-semibold text-white/60 ml-1 mb-1 block">Details *</label>
                   <textarea
                     id="message" name="message"
                     value={formData.message} onChange={handleChange}
-                    rows={3} // Reduced from 5 to 3 to keep it compact
-                    className={cn('input rounded-xl bg-neutral-50 text-sm py-3 resize-none', errors.message && 'input-error bg-red-50')}
-                    placeholder="Tell us a bit about what you're looking for..."
+                    rows={2} // Reduced to 2 rows to fit smaller screens
+                    className={cn('input rounded-xl bg-white/5 border-white/10 text-xs py-2 resize-none text-white placeholder:text-white/30 focus:border-gold focus:ring-1 focus:ring-gold', errors.message && 'border-red-500/50 bg-red-500/10')}
+                    placeholder="Tell us what you're looking for..."
                   />
                 </div>
 
                 {status === 'error' && (
                   <motion.div
-                    className="flex items-center gap-2 p-3 rounded-xl bg-red-50 border border-red-100"
+                    className="flex items-center gap-2 p-2 rounded-xl bg-red-500/10 border border-red-500/20"
                     initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }}
                   >
-                    <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
-                    <p className="text-xs text-red-600 font-medium">{errorMessage}</p>
+                    <AlertCircle className="w-3.5 h-3.5 text-red-400 flex-shrink-0" />
+                    <p className="text-[10px] text-red-300 font-medium">{errorMessage}</p>
                   </motion.div>
                 )}
 
                 <Button
                   type="submit"
                   variant={experience.accentColor === 'clay' ? 'primary' : 'primary-construction'}
-                  size="lg"
-                  className="w-full rounded-full mt-2 shadow-md hover:shadow-lg transition-shadow"
+                  className="w-full rounded-full mt-1 py-2.5 shadow-md text-xs tracking-widest uppercase bg-gold text-black hover:bg-white border-none"
                   isLoading={status === 'submitting'}
                 >
                   Send Message
@@ -244,40 +259,31 @@ export function ContactModal({ experience, isOpen, onClose, defaultService }: Co
               </form>
             </ModalBody>
 
-            {/* Cute, compact pill-shaped footer */}
-            <ModalFooter className="bg-neutral-50/50 border-t border-neutral-100/50 py-5">
-              <div className="flex flex-wrap items-center justify-center gap-3">
+            {/* Compact footer buttons */}
+            <ModalFooter className="bg-white/5 border-t border-white/10 py-3 px-5">
+              <div className="flex flex-wrap items-center justify-center gap-2">
                 <a
                   href={`tel:${experience.footer.phone.replace(/\s/g, '')}`}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border border-neutral-200 rounded-full text-[11px] font-medium text-neutral-600 hover:border-gold hover:text-gold transition-colors shadow-sm"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-[10px] font-semibold text-white hover:bg-gold hover:text-black hover:border-gold transition-colors"
                 >
-                  <Phone className="w-3.5 h-3.5" /> Call Us
+                  <Phone className="w-3 h-3" /> Call
                 </a>
 
                 <a
                   href={`mailto:${experience.footer.email}`}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border border-neutral-200 rounded-full text-[11px] font-medium text-neutral-600 hover:border-gold hover:text-gold transition-colors shadow-sm"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-[10px] font-semibold text-white hover:bg-gold hover:text-black hover:border-gold transition-colors"
                 >
-                  <Mail className="w-3.5 h-3.5" /> Email
+                  <Mail className="w-3 h-3" /> Email
                 </a>
 
                 {experience.footer.mapsUrl && (
                   <a
                     href={experience.footer.mapsUrl} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-white border border-neutral-200 rounded-full text-[11px] font-medium text-neutral-600 hover:border-gold hover:text-gold transition-colors shadow-sm"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-[10px] font-semibold text-white hover:bg-gold hover:text-black hover:border-gold transition-colors"
                   >
-                    <MapPin className="w-3.5 h-3.5" /> Location
+                    <MapPin className="w-3 h-3" /> Location
                   </a>
                 )}
-
-                {/* {linkedInUrl && (
-                  <a
-                    href={linkedInUrl} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-white border border-neutral-200 rounded-full text-[11px] font-medium text-neutral-600 hover:border-gold hover:text-gold transition-colors shadow-sm"
-                  >
-                    <Linkedin className="w-3.5 h-3.5" /> LinkedIn
-                  </a>
-                )} */}
               </div>
             </ModalFooter>
           </>

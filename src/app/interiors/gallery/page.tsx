@@ -20,16 +20,14 @@ function GalleryPageContent({ experience, projects }: { experience: ExperienceCo
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
-  // Categories based on projects
+  // Categories precisely as requested
   const categories = useMemo(() => {
-    const cats = new Set(projects.map(p => p.category));
-    return ['All', ...Array.from(cats)];
-  }, [projects]);
+    return ['All', '3D Design', '2D Design', 'Site Photos', 'Material Selection'];
+  }, []);
 
   // Flatten all images into a single gallery array
   const allImages: GalleryImage[] = useMemo(() => {
     return projects.flatMap((project) => {
-      // @ts-ignore
       const images: string[] = [project.coverImage, ...(project.gallery || [])];
       
       return images.map(src => ({
@@ -100,16 +98,16 @@ function GalleryPageContent({ experience, projects }: { experience: ExperienceCo
         <div className="container-lg mx-auto px-4 sm:px-6">
           <ScrollReveal delay={0.1}>
             {/* Minimalist Pill Filters */}
-            <div className="flex flex-wrap items-center justify-center gap-3 mb-16 lg:mb-24" role="group" aria-label="Gallery category filters">
+            <div className="flex flex-row overflow-x-auto sm:flex-wrap items-center sm:justify-center gap-3 mb-16 lg:mb-24 pb-4 sm:pb-0 scrollbar-hide snap-x snap-mandatory" role="group" aria-label="Gallery category filters">
               {categories.map((category) => (
                 <motion.button
                   key={category}
                   onClick={() => setActiveFilter(category)}
                   className={cn(
-                    'px-6 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-widest transition-all duration-300 border',
+                    'shrink-0 snap-start px-6 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-widest transition-all duration-300 border',
                     activeFilter === category
                       ? 'bg-black text-white border-black shadow-md'
-                      : 'border-neutral-200 text-neutral-500 hover:border-gold hover:text-black bg-transparent'
+                      : 'border-neutral-200 text-neutral-600 hover:border-gold hover:text-black bg-transparent'
                   )}
                   whileTap={{ scale: 0.97 }}
                   aria-pressed={activeFilter === category}
@@ -162,7 +160,7 @@ function GalleryPageContent({ experience, projects }: { experience: ExperienceCo
 
           {filteredImages.length === 0 && (
             <ScrollReveal delay={0.2} className="text-center py-24">
-              <p className="font-sans text-lg text-neutral-500">No images found in this category.</p>
+              <p className="font-sans text-lg text-neutral-600">No images found in this category.</p>
             </ScrollReveal>
           )}
         </div>

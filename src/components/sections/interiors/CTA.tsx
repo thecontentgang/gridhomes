@@ -16,7 +16,7 @@ export function CTA({ experience }: CTAProps) {
   const { headline, subtext, buttonText, backgroundImage } = experience.cta;
 
   return (
-    <section id="contact" className="section bg-white py-24 lg:py-32" aria-labelledby="cta-heading">
+    <section id="contact" className="section bg-white py-24 lg:py-32 text-black" aria-labelledby="cta-heading">
       <div className="container-lg mx-auto px-4 sm:px-6">
         <ScrollReveal delay={0.1}>
 

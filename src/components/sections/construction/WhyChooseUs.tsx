@@ -23,16 +23,20 @@ export function WhyChooseUs({ experience, number = '06' }: WhyChooseUsProps) {
   const ICONS = [ShieldCheck, Eye, Ruler, Calculator, Briefcase, FileText, PenTool, Gem, Clock];
 
   return (
-    <section id="why-choose-us" className="section bg-white py-24 lg:py-36 border-b border-neutral-100" aria-labelledby="why-choose-us-heading">
+    // 1. Added text-black here
+    <section id="why-choose-us" className="section bg-white text-black py-24 lg:py-36 border-b border-neutral-100" aria-labelledby="why-choose-us-heading">
       <div className="container-lg mx-auto px-6">
         <ScrollReveal delay={0.1}>
-          <SectionHeading
-            number={number}
-            eyebrow={experience.name}
-            title="The Grid Homes Standard"
-            subtitle="The uncompromising discipline and technical rigor that drive our construction."
-            delay={0}
-          />
+          {/* 2. Moved the override wrapper specifically around the SectionHeading ONLY */}
+          <div className="[&_h2]:!text-black [&_p]:!text-black/70 [&_span]:!text-black/60">
+            <SectionHeading
+              number={number}
+              eyebrow={experience.name}
+              title="The Grid Homes Standard"
+              subtitle="The uncompromising discipline and technical rigor that drive our construction."
+              delay={0}
+            />
+          </div>
         </ScrollReveal>
 
         <StaggerContainer
@@ -43,14 +47,14 @@ export function WhyChooseUs({ experience, number = '06' }: WhyChooseUsProps) {
           {items.map((item, index) => {
             const IconComponent = ICONS[index % ICONS.length];
             const isCenter = index === 4 || (items.length <= 6 && index === 2); // Highlight center or top right
-            
+
             return (
               <StaggerItem key={item.number || index} delay={index * 0.03}>
                 <motion.div
                   className={cn(
                     'group relative overflow-hidden h-full p-8 lg:p-10 rounded-[2rem] border transition-all duration-700 flex flex-col justify-between',
-                    isCenter 
-                      ? 'bg-neutral-900 border-neutral-800 hover:border-gold/50 hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)]' 
+                    isCenter
+                      ? 'bg-neutral-900 border-neutral-800 hover:border-gold/50 hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)]'
                       : 'bg-white border-neutral-200/60 hover:border-gold/40 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.08)]'
                   )}
                   whileHover={{ y: -8 }}
@@ -59,7 +63,7 @@ export function WhyChooseUs({ experience, number = '06' }: WhyChooseUsProps) {
                   {/* Giant Watermark Number */}
                   <div className={cn(
                     "absolute -bottom-6 -right-4 text-[9rem] leading-none font-display font-bold select-none pointer-events-none transition-colors duration-700",
-                    isCenter ? "text-white/[0.03] group-hover:text-gold/[0.05]" : "text-neutral-900/[0.03] group-hover:text-gold/[0.05]"
+                    isCenter ? "text-white/[0.03] group-hover:text-gold/[0.05]" : "text-black/[0.03] group-hover:text-gold/[0.05]"
                   )}>
                     {item.number || String(index + 1).padStart(2, '0')}
                   </div>
@@ -71,8 +75,8 @@ export function WhyChooseUs({ experience, number = '06' }: WhyChooseUsProps) {
                     <div className="flex items-center justify-between mb-10">
                       <div className={cn(
                         "flex items-center justify-center w-14 h-14 rounded-full transition-colors duration-500",
-                        isCenter 
-                          ? "bg-white/5 text-neutral-400 group-hover:bg-gold/20 group-hover:text-gold" 
+                        isCenter
+                          ? "bg-white/5 text-neutral-400 group-hover:bg-gold/20 group-hover:text-gold"
                           : "bg-neutral-50 text-neutral-400 group-hover:bg-gold/10 group-hover:text-gold border border-neutral-100"
                       )}>
                         <IconComponent strokeWidth={1.5} className="w-6 h-6" />
@@ -85,13 +89,13 @@ export function WhyChooseUs({ experience, number = '06' }: WhyChooseUsProps) {
                     <div>
                       <h3 className={cn(
                         "font-display text-2xl lg:text-3xl mb-4 transition-colors duration-500",
-                        isCenter ? "text-white group-hover:text-gold" : "text-neutral-900 group-hover:text-gold"
+                        isCenter ? "text-white group-hover:text-gold" : "text-black group-hover:text-gold"
                       )}>
                         {item.title}
                       </h3>
                       <p className={cn(
                         "font-sans text-sm sm:text-base leading-relaxed transition-colors duration-500",
-                        isCenter ? "text-neutral-400 group-hover:text-neutral-300" : "text-neutral-500 group-hover:text-neutral-700"
+                        isCenter ? "text-neutral-400 group-hover:text-neutral-300" : "text-neutral-600 group-hover:text-neutral-700"
                       )}>
                         {item.description}
                       </p>

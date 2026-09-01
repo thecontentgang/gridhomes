@@ -37,16 +37,19 @@ export function Services({ experience, services = [], number = '03' }: ServicesP
   }));
 
   return (
-    <section id="services" className="section bg-white py-24 lg:py-36 border-b border-neutral-100" aria-labelledby="services-heading">
+    <section id="services" className="section bg-white text-black py-24 lg:py-36 border-b border-neutral-100" aria-labelledby="services-heading">
       <div className="container-lg mx-auto px-6">
         <ScrollReveal delay={0.1}>
-          <SectionHeading
-            number={number}
-            eyebrow={experience.name}
-            title="Our Services"
-            subtitle="Precision-driven construction solutions tailored to build enduring structures."
-            delay={0}
-          />
+          {/* Black text override wrapper to fix invisible text on white background */}
+          <div className="[&_h2]:!text-black [&_p]:!text-black/70 [&_span]:!text-black/60">
+            <SectionHeading
+              number={number}
+              eyebrow={experience.name}
+              title="Our Services"
+              subtitle="Precision-driven construction solutions tailored to build enduring structures."
+              delay={0}
+            />
+          </div>
         </ScrollReveal>
 
         <StaggerContainer staggerChildren={0.08} delayChildren={0.1} className="mt-16 border-t border-neutral-200">
@@ -110,10 +113,10 @@ function ServiceRow({ service, isExpanded, onToggle }: ServiceRowProps) {
         </span>
 
         <div className="flex-1 min-w-0 lg:pr-[34%] z-10">
-          <h3 className="font-display text-2xl lg:text-3xl text-neutral-900 group-hover:text-gold transition-colors duration-300">
+          <h3 className="font-display text-2xl lg:text-3xl text-black group-hover:text-gold transition-colors duration-300">
             {service.name}
           </h3>
-          <p className="font-sans text-sm sm:text-base text-neutral-500 mt-2 max-w-2xl group-hover:text-neutral-700 transition-colors duration-300">
+          <p className="font-sans text-sm sm:text-base text-neutral-600 mt-2 max-w-2xl group-hover:text-neutral-700 transition-colors duration-300">
             {service.description}
           </p>
         </div>
@@ -124,7 +127,7 @@ function ServiceRow({ service, isExpanded, onToggle }: ServiceRowProps) {
             <ArrowUpRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
           </span>
           <motion.div
-            className="flex items-center justify-center w-10 h-10 rounded-full border border-neutral-200 text-neutral-900 group-hover:border-gold group-hover:text-gold transition-all duration-300 bg-white shadow-sm"
+            className="flex items-center justify-center w-10 h-10 rounded-full border border-neutral-200 text-black group-hover:border-gold group-hover:text-gold transition-all duration-300 bg-white shadow-sm"
             animate={{ rotate: isExpanded ? 180 : 0 }}
             transition={{ duration: 0.3 }}
           >
@@ -151,7 +154,7 @@ function ServiceRow({ service, isExpanded, onToggle }: ServiceRowProps) {
                       <h4 className="font-mono text-xs text-gold mb-4 tracking-[0.2em] uppercase font-semibold">{sub.title}</h4>
                       <ul className="space-y-3" role="list">
                         {sub.items.map((item, i) => (
-                          <li key={i} className="flex items-start gap-3 font-sans text-base text-neutral-600">
+                          <li key={i} className="flex items-start gap-3 font-sans text-base text-neutral-700">
                             <span className="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0 mt-2" aria-hidden="true" />
                             <span>{item}</span>
                           </li>
@@ -166,10 +169,10 @@ function ServiceRow({ service, isExpanded, onToggle }: ServiceRowProps) {
                     </p>
                   </div>
                 )}
-                
+
                 <div className="sm:col-span-2 pt-6 mt-2 border-t border-neutral-200/60">
-                  <Button 
-                    variant="primary-construction" 
+                  <Button
+                    variant="primary-construction"
                     onClick={() => openContactModal(service.name)}
                     className="w-full sm:w-auto"
                   >
