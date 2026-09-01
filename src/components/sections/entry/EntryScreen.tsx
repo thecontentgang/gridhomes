@@ -16,7 +16,7 @@ const divisions = [
     title: 'Interiors',
     headline: 'World of Spaces',
     description: 'Bespoke interior design solutions tailored to elevate your living and working environments.',
-    image: '/images/entry/interiors-cover.png',
+    image: '/images/entry/Interiors-cover.png',
   },
   {
     id: 'construction',
