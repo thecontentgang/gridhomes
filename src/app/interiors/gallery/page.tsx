@@ -29,7 +29,7 @@ function GalleryPageContent({ experience, projects }: { experience: ExperienceCo
   const allImages: GalleryImage[] = useMemo(() => {
     return projects.flatMap((project) => {
       const images: string[] = [project.coverImage, ...(project.gallery || [])];
-      
+
       return images.map(src => ({
         src,
         alt: `${project.title} - ${project.location}`,
@@ -62,7 +62,7 @@ function GalleryPageContent({ experience, projects }: { experience: ExperienceCo
       <section className="relative min-h-[50vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem]" aria-labelledby="gallery-page-heading">
         <div className="absolute inset-0 z-0 bg-black">
           <motion.img
-            src={`/images/${experience.type}/projects-hero.jpg`}
+            src="/images/interiors/gallery/gallery-hero.webp"
             alt={`${experience.name} Gallery`}
             className="w-full h-full object-cover opacity-60"
             initial={{ scale: 1.1 }}
@@ -146,7 +146,7 @@ function GalleryPageContent({ experience, projects }: { experience: ExperienceCo
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  
+
                   {/* Subtle Project Label Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">

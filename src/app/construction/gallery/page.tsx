@@ -62,7 +62,7 @@ function GalleryPageContent({ experience, projects }: { experience: ExperienceCo
       <section className="relative min-h-[50vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem]" aria-labelledby="gallery-page-heading">
         <div className="absolute inset-0 z-0 bg-black">
           <motion.img
-            src={`/images/${experience.type}/projects-hero.jpg`}
+            src="/images/construction/gallery/cnt-gallery-hero.webp"
             alt={`${experience.name} Gallery`}
             className="w-full h-full object-cover opacity-60"
             initial={{ scale: 1.1 }}
