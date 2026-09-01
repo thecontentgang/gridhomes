@@ -20,7 +20,7 @@ export const interiorsConfig: ExperienceConfig = {
   stats: interiorsStats,
   aboutContent: {
     heading: 'About Grid Homes Interiors',
-    intro: 'Founded in 2012, Grid Homes Interiors began with a simple conviction: the best interiors are invisible — they get out of the way of life.',
+    intro: 'Founded in 2016, Grid Homes Interiors began with a simple conviction: the best interiors are invisible — they get out of the way of life.',
     body: 'We are a team of designers, architects, and makers who believe that good design is not a style but a discipline. It is the rigor of asking "why" at every decision. It is the patience to iterate until the solution feels inevitable. It is the humility to let the client\'s life lead, and the craft to make that life beautiful.\n\nOur work spans villas, apartments, penthouses, and commercial spaces across South India. Each project is different because each client is different — but our process remains constant: listen deeply, think rigorously, execute precisely.',
     image: '/images/interiors/about-studio.jpg',
   },

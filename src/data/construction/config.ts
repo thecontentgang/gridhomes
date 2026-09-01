@@ -20,7 +20,7 @@ export const constructionConfig: ExperienceConfig = {
   stats: constructionStats,
   aboutContent: {
     heading: 'About Grid Homes Construction',
-    intro: 'Established in 2009, Grid Homes Construction was founded on the belief that the way a building is built matters as much as how it is designed.',
+    intro: 'Established in 2016, Grid Homes Construction was founded on the belief that the way a building is built matters as much as how it is designed.',
     body: 'We are engineers, project managers, and site leaders who have delivered over 95 projects across residential, commercial, institutional, and hospitality sectors. Our work spans 4.2 million square feet from luxury villas on impossible sites to research facilities with vibration-isolated labs.\n\nWe don\'t subcontract responsibility. Our resident engineers, quality inspectors, and safety officers are on site every day. We run BIM Level 2 on major projects. We test concrete, mock up details, and track every rupee. Quality is not a final inspection it is a daily practice.',
     image: '/images/construction/about-site.jpg',
   },

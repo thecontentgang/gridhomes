@@ -18,9 +18,13 @@ export function EntryCard({
 }: EntryCardProps) {
   const number = index === 0 ? '01' : '02';
 
+  // 1. ADD YOUR EXACT IMAGE PATHS HERE
+  const imagePath = experience.type === 'interiors'
+    ? '/images/entry/interiors-cover.png'       // <-- Path for Interiors card
+    : '/images/entry/construction-cover.png';   // <-- Path for Construction card
+
   return (
     <motion.article
-      // This layoutId hooks into the full-screen overlay to morph the sizes smoothly
       layoutId={`card-container-${experience.type}`}
       className="group relative flex-1 flex flex-col cursor-pointer bg-charcoal border border-gold/10 rounded-2xl p-3 lg:p-4 transition-colors duration-500 hover:border-gold/30 hover:bg-gold/[0.02]"
       onClick={() => onSelect(experience.type)}
@@ -40,15 +44,16 @@ export function EntryCard({
       }}
     >
       {/* Top: Compact Rounded Image Container */}
-      <div className="relative w-full aspect-video overflow-hidden rounded-xl mb-5 group">
+      <div className="relative w-full aspect-video overflow-hidden rounded-xl mb-5 group bg-[#111]">
         <Image
-          src={`/images/entry/${experience.type}-cover.png`}
+          src={imagePath}
           alt={`${experience.name} Entry`}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          // 2. FORCING FULL COLOR: Added !important flags to override any global black-and-white CSS
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 !grayscale-0 !saturate-100 !brightness-100 !contrast-100"
+          style={{ filter: 'none', WebkitFilter: 'none' }} // Ultimate failsafe to block grayscale
         />
-        <div className="absolute inset-0 bg-charcoal/10 group-hover:bg-transparent transition-colors duration-500" aria-hidden="true" />
       </div>
 
       {/* Bottom: Tighter Text & Content */}

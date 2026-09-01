@@ -109,8 +109,7 @@ export function EntryScreen() {
                   priority
                   className={cn(
                     "object-cover transition-transform duration-700 ease-out",
-                    isSelected ? "scale-105" : "group-hover:scale-105",
-                    div.id === 'construction' && !isSelected && "grayscale hover:grayscale-0"
+                    isSelected ? "scale-105" : "group-hover:scale-105"
                   )}
                 />
                 <div className="absolute inset-0 bg-neutral-950/40 group-hover:bg-transparent transition-colors duration-500" />
