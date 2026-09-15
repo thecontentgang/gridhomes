@@ -12,34 +12,30 @@ import { cn } from '@/lib/utils/cn';
 
 // Data
 import { interiorsConfig } from '@/data/interiors/config';
-import { interiorsProjects } from '@/data/interiors/projects';
-import type { ExperienceConfig, Project } from '@/types';
+import { interiorGalleryItems } from '@/data/interiors/galleryData';
+import type { ExperienceConfig } from '@/types';
 
-function GalleryPageContent({ experience, projects }: { experience: ExperienceConfig; projects: Project[] }) {
+function GalleryPageContent({ experience }: { experience: ExperienceConfig }) {
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
   // Categories precisely as requested
   const categories = useMemo(() => {
-    return ['All', '3D Design', '2D Design', 'Site Photos', 'Material Selection'];
+    return ['All', 'Material Selection', '2D Designs', '3D Designs', 'Executions'];
   }, []);
 
-  // Flatten all images into a single gallery array
+  // Map the new image data structure into GalleryImage array
   const allImages: GalleryImage[] = useMemo(() => {
-    return projects.flatMap((project) => {
-      const images: string[] = [project.coverImage, ...(project.gallery || [])];
-
-      return images.map(src => ({
-        src,
-        alt: `${project.title} - ${project.location}`,
-        projectId: project.id,
-        projectName: project.title,
-        location: project.location,
-        category: project.category
-      }));
-    });
-  }, [projects]);
+    return interiorGalleryItems.map((item, index) => ({
+      src: item.image,
+      alt: `${item.category} - ${index + 1}`,
+      projectId: `img-${index}`,
+      projectName: item.category,
+      location: 'Interiors',
+      category: item.category
+    }));
+  }, []);
 
   // Filter the flattened images based on category
   const filteredImages = useMemo(() => {
@@ -126,7 +122,7 @@ function GalleryPageContent({ experience, projects }: { experience: ExperienceCo
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.05 }}
+                transition={{ duration: 0.6, delay: 0.05 }}
                 className="relative group overflow-hidden bg-neutral-100 rounded-2xl cursor-pointer break-inside-avoid"
                 onClick={() => handleImageClick(index)}
                 role="button"
@@ -178,5 +174,5 @@ function GalleryPageContent({ experience, projects }: { experience: ExperienceCo
 }
 
 export default function InteriorsGalleryPage() {
-  return <GalleryPageContent experience={interiorsConfig} projects={interiorsProjects} />;
+  return <GalleryPageContent experience={interiorsConfig} />;
 }
