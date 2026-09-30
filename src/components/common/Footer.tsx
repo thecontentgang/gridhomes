@@ -163,7 +163,7 @@ export function Footer({ experience }: FooterProps) {
           </p>
 
           <div className="flex items-center gap-6 font-sans text-sm text-white/50">
-            <a href="/privacy" className="hover:text-gold transition-colors">Privacy Policy</a>
+            <a href="/privacy-policy" className="hover:text-gold transition-colors">Privacy Policy</a>
             <span aria-hidden="true" className="text-white/20">·</span>
             <a href="/terms" className="hover:text-gold transition-colors">Terms of Service</a>
           </div>
